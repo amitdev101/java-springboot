@@ -1,7 +1,8 @@
 package dsa;
 
 class Parent {
-    private int baseVariable;
+    private String privateVariable;
+    public String publicVariable;
 
     private void display() {
         System.out.println("Parent display");
@@ -11,12 +12,12 @@ class Parent {
         System.out.println("Parent staticDisplay called");
     }
 
-    public int getBaseVariable() {
-        return baseVariable;
+    public String getPrivateVariable() {
+        return privateVariable;
     }
 
-    public void setBaseVariable(int baseVariable) {
-        this.baseVariable = baseVariable;
+    public void setPrivateVariable(String privateVariable) {
+        this.privateVariable = privateVariable;
     }
 }
 
@@ -48,8 +49,12 @@ public class ParentChildTest {
             childObj.staticDisplay(); // output: Parent staticDisplay called
             childObj.staticDisplay(5); // output: Child staticDisplay called 5
 
-
-            //Parent p = new ();
+            Parent pp = new Parent();
+            pp.publicVariable = "Parent public Variable";
+            Parent pc = new Child();
+            pc.publicVariable = "Child set through parent type";
+            System.out.println(pp.publicVariable);
+            System.out.println(pc.publicVariable);
 
     }
 }
