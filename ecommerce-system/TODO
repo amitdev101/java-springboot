@@ -1,0 +1,5 @@
+1. Implementing redis cache
+2. Serializing deserialization infinite loop
+3. Setting up logging\
+4. Write testcases with Junit5
+5. 
