@@ -23,4 +23,15 @@ public class ProductController {
         return productService.saveProduct(product);
     }
 
+    @GetMapping("/search")
+    public List<Product> searchProduct(@RequestParam String name, @RequestParam(required = false) String description){
+        return productService.getProductsByNameAndDescription(name,description);
+    }
+
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
+    }
+
+
 }
