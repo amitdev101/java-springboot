@@ -1,5 +1,12 @@
 1. Implementing redis cache
 2. Serializing deserialization infinite loop
-3. Setting up logging\
+3. Setting up logging
 4. Write testcases with Junit5
-5. 
+5. Implementing kafka
+6. Using multithreading
+7. Connection pool threads and using them
+8. Paging query
+9. Creating custom decorator
+10. Spring profiles
+12. Different config for different profiles
+13.
