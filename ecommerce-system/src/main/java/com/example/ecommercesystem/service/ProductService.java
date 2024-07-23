@@ -4,6 +4,8 @@ package com.example.ecommercesystem.service;
 import com.example.ecommercesystem.exception.ResourceNotFoundException;
 import com.example.ecommercesystem.model.Product;
 import com.example.ecommercesystem.repository.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -14,12 +16,15 @@ import java.util.List;
 
 @Service
 public class ProductService {
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+
     @Autowired
     private ProductRepository productRepository;
 
     // Cache the list of all products
-    @Cacheable(value = "products")
+//    @Cacheable(value = "products")
     public List<Product> getAllProducts(){
+        logger.info("getting all products from db.");
         return productRepository.findAll();
     }
 
