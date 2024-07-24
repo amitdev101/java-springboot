@@ -1,6 +1,6 @@
-1. Implementing redis cache
+1. Implementing redis cache -- done
 2. Serializing deserialization infinite loop
-3. Setting up logging
+3. Setting up logging -- done 
 4. Write testcases with Junit5
 5. Implementing kafka
 6. Using multithreading

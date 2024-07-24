@@ -33,5 +33,11 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
+    // New endpoint to process products concurrently
+    @PostMapping("/process")
+    public String processProducts() {
+        productService.processProductsConcurrently();
+        return "Products are being processed";
+    }
 
 }

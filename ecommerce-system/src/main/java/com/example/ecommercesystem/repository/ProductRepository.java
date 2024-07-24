@@ -19,6 +19,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findByPriceGreaterThan(double price);
     List<Product> findByPriceBetween(double minPrice, double maxPrice);
     List<Product> findByNameAndDescription(String name, String description);
+    List<Product> findByNameContainingAndDescriptionContaining(String name, String description);
 
     long countByName(String name);
     boolean existsByName(String name);
@@ -28,6 +29,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 //    @Query("SELECT p FROM Product p WHERE p.name LIKE %:name%")
 //    List<Product> findByNameContaining(@Param("name") String name);
 
+    // Example of handling null values
     @Query("SELECT p FROM Product p WHERE " +
             "(:name IS NULL OR p.name = :name) AND " +
             "(:description IS NULL OR p.description = :description) OR " +
