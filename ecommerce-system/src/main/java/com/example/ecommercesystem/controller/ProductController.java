@@ -1,5 +1,7 @@
 package com.example.ecommercesystem.controller;
 
+import com.example.ecommercesystem.dto.KafkaMessage;
+import com.example.ecommercesystem.kafka.TestProducer;
 import com.example.ecommercesystem.model.Product;
 import com.example.ecommercesystem.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,9 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private TestProducer testProducer;
 
     @GetMapping
     public List<Product> getAllProducts(){
@@ -38,6 +43,12 @@ public class ProductController {
     public String processProducts() {
         productService.processProductsConcurrently();
         return "Products are being processed";
+    }
+
+    @PostMapping("/send-test-message")
+    public String sendTestMessage(@RequestBody KafkaMessage kafkaMessage) {
+        testProducer.sendMessage(kafkaMessage.getMessage());
+        return "Message sent to Kafka topic: test_topic";
     }
 
 }

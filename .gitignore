@@ -24,4 +24,5 @@ hs_err_pid*
 replay_pid*
 ecommerce-system/amit/mysqldockercompose/mysql-data/*
 ecommerce-system/.mvn/*
-
+ecommerce-system/amit/kafka_docker_compose/kafka_data/*
+ecommerce-system/amit/kafka_docker_compose/kafka_data/data/bootstrap.checkpoint
