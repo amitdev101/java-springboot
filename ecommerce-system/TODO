@@ -10,3 +10,5 @@
 10. Spring profiles
 12. Different config for different profiles
 13. Web socket implementation
+14. Understanding transactions
+15. Database level locks
