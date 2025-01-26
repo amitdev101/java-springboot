@@ -1,5 +1,8 @@
 package dsa;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 public class BinarySearch {
     public static int binarySearch(int[] array, int target){
         int left = 0;
@@ -21,6 +24,7 @@ public class BinarySearch {
     public static void main(String[] args){
         int[] array = {2,3,4,10,40};
         int target = 40;
+        IntStream sorted = Arrays.stream(array).sorted();
         int result = binarySearch(array, target);
         System.out.printf("result =  %d", result);
     }
