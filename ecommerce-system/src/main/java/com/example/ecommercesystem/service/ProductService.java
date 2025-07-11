@@ -79,7 +79,7 @@ public class ProductService {
     }
 
     private void processProduct(Product product) {
-        logger.info("Processing product: {} {}", product.getName(), product.getId());
+        logger.info("Processing product: {} id: {}", product.getName(), product.getId());
         try {
             Thread.sleep(random.nextInt(2000)); // Simulate random processing time upto 2sec
         } catch (InterruptedException e) {

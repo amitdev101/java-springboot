@@ -107,6 +107,11 @@ public class StreamExamples {
                         )));
         System.out.println(sortedSalaryInBand);
 
+        // top paid employee
+        Map<String, Optional<Employee>> maxSalaryPerBand = employeeList.stream()
+                .collect(Collectors.groupingBy(Employee::getSalaryBand,
+                                                Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))));
+
 
 
 
