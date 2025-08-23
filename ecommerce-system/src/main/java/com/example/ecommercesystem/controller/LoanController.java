@@ -1,7 +1,7 @@
 package com.example.ecommercesystem.controller;
 
 import com.example.ecommercesystem.model.Loan;
-import com.example.ecommercesystem.service.LoanService;
+import com.example.ecommercesystem.service.LoanServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class LoanController {
 
     @Autowired
-    private LoanService loanService;
+    private LoanServiceImpl loanService;
 
     @GetMapping
     public List<Loan> getAllLoans() {

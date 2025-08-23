@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LoanService {
+public class LoanServiceImpl implements LoanService {
 
     @Autowired
     private LoanRepository loanRepository;

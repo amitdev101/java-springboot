@@ -14,14 +14,15 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
-public class ProductService {
-    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+public class ProductServiceImpl implements ProductService {
+    private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Autowired
     private ProductRepository productRepository;
@@ -42,6 +43,7 @@ public class ProductService {
 
     // Cache the list of all products
 //    @Cacheable(value = "products")
+    @Override
     public List<Product> getAllProducts(){
         logger.info("getting all products from db.");
         return productRepository.findAll();
@@ -76,6 +78,55 @@ public class ProductService {
         for (Product product : products) {
             executorService.submit(() -> processProduct(product));
         }
+    }
+
+
+    public List<String> processProductsWithFutures() {
+        List<Product> products = productRepository.findAll();
+        List<Future<String>> futures = new ArrayList<>();
+        for (Product p : products) {
+            futures.add(
+                    executorService.submit(() -> getProductDetails(p))
+            );
+        }
+
+        // block & gather results in same order
+        List<String> results = new ArrayList<>();
+        for (Future<String> f : futures) {
+            try {
+                results.add(f.get());     // blocks until each is done
+            } catch (InterruptedException | ExecutionException e) {
+                Thread.currentThread().interrupt();
+                results.add("ERROR: " + e.getMessage());
+            }
+        }
+        return results;
+    }
+
+    public List<String> processProductsWithCF() {
+        List<Product> products = productRepository.findAll();
+
+        // 1) Kick off all tasks
+        List<CompletableFuture<String>> cfs = products.stream()
+                .map(p -> CompletableFuture
+                        .supplyAsync(() -> getProductDetails(p), executorService))
+                .collect(Collectors.toList());
+
+        // 2) Wait for all to complete
+        CompletableFuture
+                .allOf(cfs.toArray(new CompletableFuture[0]))
+                .join();  // non‐throws CompletionException on error
+
+        // 3) Collect ordered results
+        return cfs.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList());
+    }
+
+
+
+    private String getProductDetails(Product product) {
+        return product.toString();
     }
 
     private void processProduct(Product product) {
