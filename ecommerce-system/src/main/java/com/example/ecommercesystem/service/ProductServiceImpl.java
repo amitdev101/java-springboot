@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -42,12 +44,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     // Cache the list of all products
-//    @Cacheable(value = "products")
+    @Cacheable(value = "products")
     @Override
     public List<Product> getAllProducts(){
         logger.info("getting all products from db.");
         return productRepository.findAll();
     }
+
+    @Override
+    public Page<Product> getAllProducts(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
+
 
     // Save a product and update the cache
     @CachePut(value = "product", key = "#product.id")
