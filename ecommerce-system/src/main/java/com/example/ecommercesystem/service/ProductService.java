@@ -14,12 +14,19 @@ public interface ProductService {
     /** Legacy: keep for callers that still expect a List */
     @Deprecated
     List<Product> getAllProducts();
+
     Product saveProduct(Product product);
+
     List<Product> getProductsByNameAndDescription(String name, String description);
+
     Product getProductById(Long id);
+
     void evictAllProductsCache();
+
     public void processProductsConcurrently();
+
     List<String> processProductsWithFutures();
+    
     List<String> processProductsWithCF();
 
 }

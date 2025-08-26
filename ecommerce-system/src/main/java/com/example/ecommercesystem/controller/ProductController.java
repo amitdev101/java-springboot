@@ -26,7 +26,7 @@ public class ProductController {
     private TestProducer testProducer;
 
     @GetMapping
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
@@ -37,17 +37,16 @@ public class ProductController {
     }
 
 
-
     @PostMapping
     // @NotBlank (and all the other Bean Validation annotations like @Size, @Email, etc.) only declare the rule.
     // Spring needs to be told when to enforce those rules → that’s what @Valid does at the controller boundary.
-    public Product createProduct(@Valid @RequestBody Product product){
+    public Product createProduct(@Valid @RequestBody Product product) {
         return productService.saveProduct(product);
     }
 
     @GetMapping("/search")
-    public List<Product> searchProduct(@RequestParam String name, @RequestParam(required = false) String description){
-        return productService.getProductsByNameAndDescription(name,description);
+    public List<Product> searchProduct(@RequestParam String name, @RequestParam(required = false) String description) {
+        return productService.getProductsByNameAndDescription(name, description);
     }
 
     @GetMapping("/{id}")
@@ -75,7 +74,7 @@ public class ProductController {
     }
 
     @PostMapping("/process-async-with-cf")
-    public ProcessResponse  processProductsAsyncWithCF() {
+    public ProcessResponse processProductsAsyncWithCF() {
         List<String> details = productService.processProductsWithCF();
         return new ProcessResponse("completable future results", details);
     }

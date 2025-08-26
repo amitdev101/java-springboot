@@ -13,12 +13,21 @@ import java.sql.Timestamp;
 @Data
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    /**
+     * ⚔️ The Strategies Explained (with Analogy)
+     * Strategy	    Who Generates ID	        When Generated	            Batch Support
+     * IDENTITY	    Database (auto-increment)	On INSERT (one at a time)	❌ NO
+     * SEQUENCE	    Hibernate via DB sequence	Before INSERT	            ✅ YES
+     * TABLE	    Hibernate via a table	    Before INSERT	            ✅ YES
+     * AUTO	        Hibernate chooses	        Varies	                    🤷 Depends
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 120, nullable = false)
-    @Size(max = 120, message = "Name must be 120 characters or less")
+    @Size(max = 2, message = "Name must be 120 characters or less")
     @NotBlank
     // Without this, Bean Validation imposes no default limit.
     // The API can accept very long strings until DB constraints reject them.

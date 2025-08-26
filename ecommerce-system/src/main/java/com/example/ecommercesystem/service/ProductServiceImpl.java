@@ -18,20 +18,18 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
 import java.util.Random;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
+    private final Random random = new Random();
 
     @Autowired
     private ProductRepository productRepository;
-
     private ExecutorService executorService;
-    private final Random random = new Random();
-
 
     @PostConstruct
     public void init() {
@@ -46,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
     // Cache the list of all products
     @Cacheable(value = "products")
     @Override
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts() {
         logger.info("getting all products from db.");
         return productRepository.findAll();
     }
@@ -60,13 +58,12 @@ public class ProductServiceImpl implements ProductService {
     // Save a product and update the cache
     @CachePut(value = "product", key = "#product.id")
     @CacheEvict(value = "products", allEntries = true)
-    public Product saveProduct(Product product){
+    public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
 
     public List<Product> getProductsByNameAndDescription(String name, String description) {
         return productRepository.findByNameAndDescription(name, description);
-
     }
 
     // Cache a product by ID
@@ -132,7 +129,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
     private String getProductDetails(Product product) {
         return product.toString();
     }
@@ -143,9 +139,7 @@ public class ProductServiceImpl implements ProductService {
             Thread.sleep(random.nextInt(2000)); // Simulate random processing time upto 2sec
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            logger.info("Product processing interrupted: {} {}",
-                    product.getName(),
-                    product.getId());
+            logger.info("Product processing interrupted: {} {}", product.getName(), product.getId());
         }
         logger.info("Product processed: {} {}", product.getName(), product.getId());
     }

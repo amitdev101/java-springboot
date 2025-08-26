@@ -14,9 +14,19 @@ import javax.persistence.Id;
 public class Loan {
 
     // Getters and Setters
+    /**
+     * ⚔️ The Strategies Explained (with Analogy)
+     * Strategy	    Who Generates ID	        When Generated	            Batch Support
+     * IDENTITY	    Database (auto-increment)	On INSERT (one at a time)	❌ NO
+     * SEQUENCE	    Hibernate via DB sequence	Before INSERT	            ✅ YES
+     * TABLE	    Hibernate via a table	    Before INSERT	            ✅ YES
+     * AUTO	        Hibernate chooses	        Varies	                    🤷 Depends
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+
     private String borrowerName;
     private double amount;
     private double interestRate;
