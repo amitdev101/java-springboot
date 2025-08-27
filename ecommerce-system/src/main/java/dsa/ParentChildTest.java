@@ -8,6 +8,10 @@ class Parent {
         System.out.println("Parent display");
     }
 
+    public void parentMethod() {
+        System.out.println("Parent instance method is called");
+    }
+
     public static void staticDisplay(){
         System.out.println("Parent staticDisplay called");
     }
@@ -26,6 +30,10 @@ class Child extends Parent {
         System.out.println("Child display");
     }
 
+    public void childMethod(){
+        System.out.println("child instance method is called");
+    }
+
     public static void staticDisplay(){
         System.out.println("Child staticDisplay called ");
     }
@@ -41,6 +49,7 @@ public class ParentChildTest {
         public static void main(String[] args) {
             Parent parentObj = new Child();
             Child childObj = new Child();
+            // Method calls are bound by declaration.
             childObj.display();  // output: Child display
             // parentObj.display(); // compilation error display() has private access in dsa.Parent
 
@@ -53,8 +62,11 @@ public class ParentChildTest {
             pp.publicVariable = "Parent public Variable";
             Parent pc = new Child();
             pc.publicVariable = "Child set through parent type";
-            System.out.println(pp.publicVariable);
-            System.out.println(pc.publicVariable);
+            System.out.println(pp.publicVariable); // Parent public Variable
+            System.out.println(pc.publicVariable); // Child set through parent type
+
+            parentObj.parentMethod();
+            childObj.childMethod();
 
     }
 }
